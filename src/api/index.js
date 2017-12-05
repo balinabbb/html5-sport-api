@@ -1,8 +1,12 @@
 import { message } from 'antd';
 import sport from './_sport';
+import season from './_season';
+import seria from './_seria';
 
 export default {
-    sport
+    sport,
+    season,
+    seria
 }
 
 const url = 'http://94.177.230.203:8080/sport/rest/';
@@ -38,7 +42,7 @@ function request(params) {
             else if (result)
                 success(result);
             else
-                fail("Ismeretlen hiba");
+                fail("Szerver oldali hiba");
         })
         .catch(fail);
 }
@@ -63,5 +67,11 @@ const api = {
 };
 
 export function call(endPoint, method, params) {
-    return (success, fail) => api[method || 'get']({ endPoint, success, fail: fail || message.error, ...params });
+    return (success, fail) =>
+        api[method || 'get']({
+            endPoint,
+            success,
+            fail: fail || (err => err instanceof TypeError ? true : message.error(err)),
+            ...params
+        });
 }
