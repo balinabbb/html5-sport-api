@@ -96,7 +96,7 @@ export default class extends React.Component {
                     }))}
                     onRow={selectedEvent => ({
                         style: { cursor: 'pointer' },
-                        onClick: () => console.log(selectedEvent) || this.setState({ selectedEvent }, () => console.log(this.state.selectedEvent))
+                        onClick: () => this.setState({ selectedEvent })
                     })}
                 />
                 <Modal
