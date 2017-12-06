@@ -2,14 +2,22 @@ import { message } from 'antd';
 import sport from './_sport';
 import season from './_season';
 import seria from './_seria';
+import specialization from './_specialization';
+import conditionType from './_conditionType';
+import condition from './_condition';
+import championship from './_championship';
 
 export default {
     sport,
     season,
-    seria
+    seria,
+    specialization,
+    conditionType,
+    condition,
+    championship
 }
 
-const url = 'http://94.177.230.203:8080/sport/rest/';
+const url = 'http://94.177.230.203:8080/sport/rest/';//https://crossorigin.me/...
 const defaultOptions = {
     headers: {
         'Accept': 'application/json',

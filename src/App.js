@@ -8,6 +8,9 @@ import configureStore, { getHistory } from './store';
 import Sport from './components/sport';
 import Season from './components/season';
 import Seria from './components/seria';
+import ConditionType from './components/conditionType';
+import Condition from './components/condition';
+import Championship from './components/championship';
 
 const Header = Layout.Header;
 const Content = Layout.Content;
@@ -47,6 +50,15 @@ export default class extends React.Component {
                                 <Menu.Item key="seria">
                                     <Link to="/seria"><Icon type="folder-open" />Seria</Link>
                                 </Menu.Item>
+                                <Menu.Item key="condition-type">
+                                    <Link to="/condition-type"><Icon type="question-circle" />Condition Type</Link>
+                                </Menu.Item>
+                                <Menu.Item key="condition">
+                                    <Link to="/condition"><Icon type="check-circle" />Condition</Link>
+                                </Menu.Item>
+                                <Menu.Item key="championship">
+                                    <Link to="/championship"><Icon type="star" />Championship</Link>
+                                </Menu.Item>
                             </Menu>
                         </Header>
                         <Layout>
@@ -55,6 +67,9 @@ export default class extends React.Component {
                                 <Route exact path="/sport" component={Sport} />
                                 <Route exact path="/season" component={Season} />
                                 <Route exact path="/seria" component={Seria} />
+                                <Route exact path="/condition-type" component={ConditionType} />
+                                <Route exact path="/condition" component={Condition} />
+                                <Route exact path="/championship" component={Championship} />
                             </Content>
                         </Layout>
                     </Layout>

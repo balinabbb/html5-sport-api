@@ -1,7 +1,6 @@
 import React from 'react';
 import { Table, Button, Modal, Input, Form } from 'antd';
 import api from '../../api';
-import Specialization from './Specialization';
 
 const columns = [
     {
@@ -27,15 +26,13 @@ export default class extends React.Component {
         modalVisible: false,
         name: '',
         description: '',
-        specialization: null,
-        sportId: null
     }
 
     nameInput = null
     descriptionInput = null
 
     fetchItems() {
-        api.sport.all()(items => this.setState({ items }))
+        api.seria.all()(items => this.setState({ items }))
     }
 
     componentWillMount() {
@@ -43,7 +40,7 @@ export default class extends React.Component {
     }
 
     closeModal() {
-        this.setState({ modalVisible: false, specialization: null })
+        this.setState({ modalVisible: false })
     }
 
     modalSaveClick() {
@@ -55,7 +52,7 @@ export default class extends React.Component {
             this.descriptionInput.focus();
             return;
         }
-        api.sport.save(name, description)(() =>
+        api.seria.save(name, description)(() =>
             this.setState({ name: '', description: '', modalVisible: false })
         );
     }
@@ -80,60 +77,33 @@ export default class extends React.Component {
         )
     }
 
-    didAddSpecialization(name, description) {
-        const { specialization } = this.state;
-        this.setState({
-            specialization: [...specialization, {
-                name,
-                description,
-                id: Math.max(...specialization.map(({ id }) => id)) + 1
-            }]
-        })
-    }
-
     render() {
-        const { items, modalVisible, specialization, sportId } = this.state;
+        const { items, modalVisible } = this.state;
         return (
             <div>
                 <Button
                     icon="plus"
                     type="primary"
                     onClick={() => this.setState({ modalVisible: true })}
-                    style={{ marginBottom: 20 }}>Új sport</Button>
+                    style={{ marginBottom: 20 }}>Új seria</Button>
                 <Table
                     dataSource={items.map(x => ({ ...x, key: x.id }))}
                     columns={columns}
-                    onRow={({ id, specialization }) => ({
-                        onClick: () => this.setState({
-                            specialization,
-                            sportId: id,
-                            modalVisible: true
-                        }),
-                        style: { cursor: 'pointer' }
-                    })}
                 />
                 <Modal
                     visible={modalVisible}
-                    title={specialization ? "Specializáció" : "Új sport"}
+                    title="Új seria"
                     onCancel={() => this.closeModal()}
-                    width={specialization ? '70%' : undefined}
                     footer={(
                         <Button
                             type="primary"
-                            onClick={() => specialization ? this.closeModal() : this.modalSaveClick()}
+                            onClick={() => this.modalSaveClick()}
                         >
-                            {specialization ? "OK" : "Mentés"}
+                            Mentés
                         </Button>
                     )}
                 >
-                    {specialization ?
-                        <Specialization
-                            columns={columns}
-                            items={specialization}
-                            sportId={sportId}
-                            didAddSpecialization={(name, description) => this.didAddSpecialization(name, description)}
-                        />
-                        : this.getFormContent()}
+                    {this.getFormContent()}
                 </Modal>
             </div>
         )
